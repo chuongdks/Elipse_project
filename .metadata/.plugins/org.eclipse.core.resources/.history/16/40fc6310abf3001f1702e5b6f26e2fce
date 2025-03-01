@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HelloWorldJDT
+Bundle-SymbolicName: HelloWorldJDT
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: HelloWorldJDT
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

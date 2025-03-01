@@ -1,0 +1,72 @@
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+
+public class JDT_Test {
+
+	public void run() throws IOException {
+		
+		//we need to read the content of the file
+		String content = FileUtils.readFileToString(new File("./src/ContentReader.java"));
+		
+		
+		//we need to create a parser object
+		ASTParser parser = ASTParser.newParser(AST.JLS8);
+		
+		//we need to give the content to the parser
+		parser.setSource(content.toCharArray());
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		
+		// 
+		cu.accept(new ASTVisitor() {
+
+			@Override
+			public boolean visit(MethodDeclaration node) {
+				// TODO Auto-generated method stub
+				System.out.println("Name of the method call: " + node.getName().getIdentifier() + "\nReturn type: " + node.getReturnType2());
+				System.out.println("Start line: " + cu.getLineNumber(node.getStartPosition()));	// Start line number
+				System.out.println("End line: " + cu.getLineNumber(node.getStartPosition() + node.getLength()));	// end line number
+				
+				// Parameter
+				for (Object obj:node.parameters()) {
+					SingleVariableDeclaration svd = (SingleVariableDeclaration) obj;
+					System.out.println("Parameter type: " + svd.getType() + "\nParameter name: " + svd.getName().getIdentifier());
+					System.out.println("\n");
+				}
+				return true;
+			}
+
+//			@Override
+//			public boolean visit(MethodInvocation node) {
+//				// TODO Auto-generated method stub
+//				
+//				System.out.println("Name of the method call: "+node.getName().getIdentifier() +" Receiver expression: "+node.getExpression());
+//				return true;
+//			}
+		});
+		
+		//we need to parse the content
+		
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JDT_Test driver = new JDT_Test();
+		try {
+			driver.run();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

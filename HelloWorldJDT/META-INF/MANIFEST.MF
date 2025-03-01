@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HelloWorldJDT
+Bundle-SymbolicName: HelloWorldJDT
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.jdt;bundle-version="3.19.700",
+ org.eclipse.jdt.core;bundle-version="3.40.0",
+ org.eclipse.core.resources;bundle-version="3.22.0",
+ org.eclipse.core.runtime;bundle-version="3.32.0"
+Automatic-Module-Name: HelloWorldJDT
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

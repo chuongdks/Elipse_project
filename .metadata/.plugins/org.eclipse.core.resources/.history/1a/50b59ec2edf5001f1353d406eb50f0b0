@@ -1,0 +1,137 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+
+public class JDT_Test {
+
+	public void run() throws IOException {
+		// Read source file content 
+		String content = FileUtils.readFileToString(new File("./src/ContentReader.java"));
+		
+		
+		// Set up the AST Parser
+		ASTParser parser = ASTParser.newParser(AST.JLS8);
+		// Give the content to the parser
+		parser.setSource(content.toCharArray());
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		
+		final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		
+        // Store method signatures
+        Map<String, String> methodSignatures = new HashMap<>();
+        // Store variable method call history
+        Map<String, List<String>> variableMethodCalls = new HashMap<>();
+        
+		// AST Visitor
+		cu.accept(new ASTVisitor() {
+
+			@Override
+			public boolean visit(MethodDeclaration node) {
+				// Get Method's name, return type, start and end line
+				String methodName = node.getName().getIdentifier();
+                int startLine = cu.getLineNumber(node.getStartPosition());
+                int endLine = cu.getLineNumber(node.getStartPosition() + node.getLength());
+                int parameterCount = 0;
+                
+//              System.out.println("\nMethod name: " + methodName + "\nReturn type: " + node.getReturnType2());
+//				System.out.println("Start line: " + cu.getLineNumber(node.getStartPosition()));	// Start line number
+//				System.out.println("End line: " + cu.getLineNumber(node.getStartPosition() + node.getLength()));	// end line number
+				
+				// Collect Parameter inside the method body
+				ArrayList<String> paramTypes = new ArrayList<>();	// Store ArrayList of parameter type
+				for (Object obj : node.parameters()) {
+					SingleVariableDeclaration svd = (SingleVariableDeclaration) obj;
+					// System.out.println("Parameter type: " + svd.getType() + "\nParameter name: " + svd.getName().getIdentifier()); // param type and name
+					paramTypes.add(svd.getType().toString());
+					parameterCount++;
+				}
+				
+				
+				/*
+				 * 2. Get method signature (Method name, # of parameters and types of parameters
+				 * */
+				String methodSignatureString =  methodName + " : " + parameterCount + " : " + String.join(", ", paramTypes);
+				System.out.println("\nMethod signature: \t" + methodSignatureString);
+				// Add methodSignatures to a methodName using Map
+				methodSignatures.put(methodName, methodSignatureString);
+				
+				/*
+				 * 1. Get all variable declare in the method's body along with the line
+				 * */
+				node.accept(new ASTVisitor() {
+					@Override
+					public boolean visit(VariableDeclarationStatement varNode) {
+						// TODO Auto-generated method stub
+						for (Object fragment : varNode.fragments()) {
+							VariableDeclarationFragment vdf = (VariableDeclarationFragment) fragment;
+                            String variableName = vdf.getName().getIdentifier();
+                            int variableLine = cu.getLineNumber(vdf.getStartPosition());
+                            System.out.println("Line: " + variableLine + " Variable name: " + variableName);
+						}
+						return super.visit(node);
+					}
+				});
+				
+				return true;
+			}
+
+			@Override
+			public boolean visit(MethodInvocation node) {
+                String methodName = node.getName().getIdentifier();
+                String receiver = (node.getExpression() != null) ? node.getExpression().toString() : "N/A";
+                int lineNumber = cu.getLineNumber(node.getStartPosition());
+
+                System.out.println("Method Call: " + methodName + " (Line " + lineNumber + "), Receiver: " + receiver);
+
+                // Store method call history per variable
+                if (!receiver.equals("N/A")) {
+                    variableMethodCalls.putIfAbsent(receiver, new ArrayList<>());
+                    variableMethodCalls.get(receiver).add(methodName);
+                }
+
+                // Get method signature if declared in the file
+                if (methodSignatures.containsKey(methodName)) {
+                    System.out.println("Matched Signature: " + methodSignatures.get(methodName));
+                } else {
+                    System.out.println("Signature unknown (Possibly an external method)");
+                }
+
+                // Prior method calls using the same variable
+                if (variableMethodCalls.containsKey(receiver)) {
+                    System.out.println("Prior calls on " + receiver + ": " + variableMethodCalls.get(receiver));
+                }
+
+                return true;
+			}
+		});
+		
+		//we need to parse the content
+		
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JDT_Test driver = new JDT_Test();
+		try {
+			driver.run();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

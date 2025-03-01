@@ -1,0 +1,38 @@
+2025-02-25 13:37:13,906 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-02-25 17:06:00,005 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.15; built: 2024-11-05T19:44:57.623Z; git: 8281ae9740d4b4225e8166cc476bad237c70213a; jvm 21.0.5+11-LTS
+2025-02-25 17:06:00,074 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@50ee8e16{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@7112d56c{STARTED}}
+2025-02-25 17:06:00,075 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-02-25 17:06:00,098 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@223b7b64{HTTP/1.1, (http/1.1)}{127.0.0.1:53416}
+2025-02-25 17:06:00,105 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@32ae89f9{STARTING}[12.0.15,sto=0] @12652177ms
+2025-02-25 17:34:58,419 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@32ae89f9{STOPPING}[12.0.15,sto=0]
+2025-02-25 17:34:58,423 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@223b7b64{HTTP/1.1, (http/1.1)}{127.0.0.1:0}
+2025-02-28 02:24:05,755 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2025-02-28 02:36:18,542 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.15; built: 2024-11-05T19:44:57.623Z; git: 8281ae9740d4b4225e8166cc476bad237c70213a; jvm 21.0.5+11-LTS
+2025-02-28 02:36:18,579 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@6a2befe2{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@6f9c9562{STARTED}}
+2025-02-28 02:36:18,580 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-02-28 02:36:18,596 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@5feb7181{HTTP/1.1, (http/1.1)}{127.0.0.1:54049}
+2025-02-28 02:36:18,613 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@6e5985a{STARTING}[12.0.15,sto=0] @839994ms
+2025-02-28 03:15:59,444 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@6e5985a{STOPPING}[12.0.15,sto=0]
+2025-02-28 03:15:59,444 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@5feb7181{HTTP/1.1, (http/1.1)}{127.0.0.1:0}
+2025-02-28 09:33:35,551 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-02-28 09:41:25,627 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.15; built: 2024-11-05T19:44:57.623Z; git: 8281ae9740d4b4225e8166cc476bad237c70213a; jvm 21.0.5+11-LTS
+2025-02-28 09:41:25,689 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@1695f636{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@19b4c92e{STARTED}}
+2025-02-28 09:41:25,690 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-02-28 09:41:25,709 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@4e2d8d77{HTTP/1.1, (http/1.1)}{127.0.0.1:50399}
+2025-02-28 09:41:25,726 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@259976b{STARTING}[12.0.15,sto=0] @485876ms
+2025-02-28 10:42:11,476 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@259976b{STOPPING}[12.0.15,sto=0]
+2025-02-28 10:42:11,483 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@4e2d8d77{HTTP/1.1, (http/1.1)}{127.0.0.1:0}
+2025-02-28 10:57:59,906 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-02-28 10:59:02,452 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.15; built: 2024-11-05T19:44:57.623Z; git: 8281ae9740d4b4225e8166cc476bad237c70213a; jvm 21.0.5+11-LTS
+2025-02-28 10:59:02,586 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@63a21494{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@6e7a2719{STARTED}}
+2025-02-28 10:59:02,587 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-02-28 10:59:02,640 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@45f13b57{HTTP/1.1, (http/1.1)}{127.0.0.1:49938}
+2025-02-28 10:59:02,669 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@511e0f27{STARTING}[12.0.15,sto=0] @95126ms
+2025-02-28 14:08:54,241 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@511e0f27{STOPPING}[12.0.15,sto=0]
+2025-02-28 14:08:54,250 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@45f13b57{HTTP/1.1, (http/1.1)}{127.0.0.1:0}
+2025-03-01 09:24:17,426 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2025-03-01 09:48:36,038 [Start Help Server] INFO  org.eclipse.jetty.server.Server - jetty-12.0.15; built: 2024-11-05T19:44:57.623Z; git: 8281ae9740d4b4225e8166cc476bad237c70213a; jvm 21.0.5+11-LTS
+2025-03-01 09:48:36,226 [Start Help Server] INFO  o.e.j.server.handler.ContextHandler - Started oeje8n.ContextHandler$CoreContextHandler@563eac7d{/help,/help,b=null,a=AVAILABLE,h=oeje8n.ContextHandler$CoreContextHandler$CoreToNestedHandler@30c2306f{STARTED}}
+2025-03-01 09:48:36,227 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
+2025-03-01 09:48:36,289 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@3361a8d5{HTTP/1.1, (http/1.1)}{127.0.0.1:50203}
+2025-03-01 09:48:36,330 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@5e704de0{STARTING}[12.0.15,sto=0] @1884160ms
