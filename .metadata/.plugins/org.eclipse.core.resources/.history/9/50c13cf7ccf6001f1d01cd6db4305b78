@@ -39,8 +39,8 @@ public class JDT_Test {
 		// Store method signatures (Key: Method name, Value: Method Signature concatenated together)
 	    List<String> methodDeclarations = new ArrayList<>();												// List of Method Declaration and vars declared inside its body			
 	    List<String> methodSignature = new ArrayList<>();													// List of Method Signature 			 
-	    Map<String, List<String>> receiverToMethodsMap  = new HashMap<>();										// Map of method Invocation Receiver (Key: receiver, Value: List of Method Name)
-	    Map<String, List<String>> methodToInvokedMethodsMap   = new HashMap<>();
+	    Map<String, List<String>> methodReceivers = new HashMap<>();										// Map of method Invocation Receiver (Key: receiver, Value: Method Name)
+	    Map<String, List<String>> methodArguments = new HashMap<>();
         
 		// AST Visitor
 		cu.accept(new ASTVisitor() {
@@ -102,15 +102,15 @@ public class JDT_Test {
 		        // Capture receiver of each Method Invocation
 		        if (node.getExpression() != null) {															// Check receiver (eg: object.method(), object is the receiver)
 		            String receiver = node.getExpression().toString();
-		            receiverToMethodsMap.computeIfAbsent(receiver, key -> new ArrayList<>()).add(methodName);	// eg: { "obj" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
+		            methodReceivers.computeIfAbsent(receiver, key -> new ArrayList<>() ).add(methodName);	// eg: { "obj" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
 		        }
 
 		        // Track method if the receiver is a Simple Name, not something complex (eg: Method call chain, Field access, Array access, Type reference, Cast expressions,...)
 		        if (node.getExpression() != null && node.getExpression() instanceof SimpleName) {			// Check if receiver is a SimpleName (eg: var, method, parameter names..._
-		            String receiver2 = node.getExpression().toString();										// Filtered Receiver
-		            List<String> methodsUsingReceiver = receiverToMethodsMap.get(receiver2);
+		            String receiver = node.getExpression().toString();
+		            List<String> methodsUsingReceiver = methodReceivers.get(receiver);
 		            if (methodsUsingReceiver != null) {
-		                methodToInvokedMethodsMap.put(methodName, methodsUsingReceiver);					// eg: { "foo" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
+		                methodArguments.put(methodName, methodsUsingReceiver);
 		            }
 		        }
 		        
@@ -134,10 +134,11 @@ public class JDT_Test {
 //	    }
 		
 		/* Question 3*/
-	    System.out.println("Method Arguments:");
-	    for (Map.Entry<String, List<String>> entry : methodToInvokedMethodsMap  .entrySet()) {
-	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+	    System.out.println("Second Question");
+	    for (String signature : methodReceivers) {
+	    	System.out.println(signature);	     
 	    }
+	    
 	    
 	}
 	
