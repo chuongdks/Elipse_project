@@ -38,15 +38,11 @@ public class JDT_Test {
 		
 		// Store method signatures (Key: Method name, Value: Method Signature concatenated together)
 	    List<String> methodDeclarations = new ArrayList<>();												// List of Method Declaration and vars declared inside its body			
-	    List<String> methodSignature = new ArrayList<>();													// List of Method Signature 
-	    
+	    List<String> methodSignature = new ArrayList<>();													// List of Method Signature 			 
 	    Map<String, List<String>> receiverToMethodsMap = new HashMap<>();									// Map of method Invocation Receiver (Key: receiver, Value: List of Method Name)
-	    Map<String, List<String>> receiverToMethodsMap2 = new HashMap<>();    								// Same as above but this one is for method invocation inside a method declaration
-	    
 	    Map<String, List<String>> methodToInvokedMethodsMap = new HashMap<>();								// Map of method Invocation Receiver (Key: method, Value: List of Method Name)
-	    Map<String, List<String>> methodToInvokedMethodsMap2 = new HashMap<>();								// Map of method Invocation Receiver (Key: method, Value: List of Method Name)
         
-	      
+	    Map<String, List<String>> methodsCalledInBody = new HashMap<>();      
 		// AST Visitor
 		cu.accept(new ASTVisitor() {
 			@Override
@@ -75,16 +71,20 @@ public class JDT_Test {
 		        					   "\nVariables declared in method : " + (variablesInMethod.isEmpty() ? "No Variables" : "" + String.join(", ", variablesInMethod)) + 
 		        					   "\n");
 		                		        		     
-                // Track methods invoked on receivers in the current method body                                           
-                node.accept(new ASTVisitor() {  															// Recursively traverse the method body
+                // Track methods invoked on receivers in the current method body
+                // Map<String, List<String>> methodsCalledInBody = new HashMap<>();                                    
+                                
+                node.accept(new ASTVisitor() {  // Recursively traverse the method body
                     @Override
-                    public boolean visit(MethodInvocation methodInvocation) {                    	
-                        // Get method invocation name and receiver           
-                    	int mbLine = cu.getLineNumber(methodInvocation.getStartPosition()); 								// Current line number
+                    public boolean visit(MethodInvocation methodInvocation) {
+                        // System.out.println("Method declaration name: " + methodName);	// debug
+                        // System.out.println("Invoked Method: " + invokedMethodName);  // debug
+                    	
+                        // Get method invocation name and receiver                    	
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
-                        String receiver = (methodInvocation.getExpression() != null) ? "Line: " + mbLine + " Method call: " + methodInvocation.getExpression().toString() : "null";
+                        String receiver = (methodInvocation.getExpression() != null) ? methodInvocation.getExpression().toString() : "null";
 
-                        receiverToMethodsMap2
+                        methodsCalledInBody
                             .computeIfAbsent(receiver, key -> new ArrayList<>())
                             .add(invokedMethodName);														// eg: { "obj" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
 
@@ -92,21 +92,13 @@ public class JDT_Test {
                     }
                 });
                 
-                // Store these methods in the methodToInvokedMethodsMap, associating the method with the list of invoked methods on the receiver
+                // Now store these methods in the methodToInvokedMethodsMap, associating the method with the list of invoked methods on the receiver
                 List<String> invokedMethodsOnReceiver = new ArrayList<>();
-                for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+                for (Map.Entry<String, List<String>> entry : methodsCalledInBody.entrySet()) {
                     invokedMethodsOnReceiver.addAll(entry.getValue());										// Add all of the List<String> from methodsCalledInBody
                 }
-                methodToInvokedMethodsMap2.put(methodName, invokedMethodsOnReceiver);
+                methodToInvokedMethodsMap.put(methodName, invokedMethodsOnReceiver);
                 
-                /* Question 3 */
-		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);								// debug       
-        	    
-        	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-        	        System.out.println(entry.getKey() + " -> Methods using receiver: " + entry.getValue());
-        	    }
-        	    System.out.print("\n");
-        	    
 		        return super.visit(node);
 			}
 			
@@ -170,7 +162,12 @@ public class JDT_Test {
 //	    for (String signature : methodSignature) {
 //	    	System.out.println(signature);	     
 //	    }
-	
+		
+		/* Question 3*/
+	    System.out.println("Method Arguments:");
+	    for (Map.Entry<String, List<String>> entry : methodsCalledInBody.entrySet()) {
+	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+	    }
 	    
 	}
 	

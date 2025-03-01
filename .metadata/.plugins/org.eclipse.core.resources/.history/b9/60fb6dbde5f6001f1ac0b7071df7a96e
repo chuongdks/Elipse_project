@@ -75,14 +75,14 @@ public class JDT_Test {
 		        					   "\nVariables declared in method : " + (variablesInMethod.isEmpty() ? "No Variables" : "" + String.join(", ", variablesInMethod)) + 
 		        					   "\n");
 		                		        		     
-                // Track methods invoked on receivers in the current method body                                           
+                // Track methods invoked on receivers in the current method body                                  
+		        System.out.println("Method declaration name: " + methodName);	// debug                
                 node.accept(new ASTVisitor() {  															// Recursively traverse the method body
                     @Override
                     public boolean visit(MethodInvocation methodInvocation) {                    	
-                        // Get method invocation name and receiver           
-                    	int mbLine = cu.getLineNumber(methodInvocation.getStartPosition()); 								// Current line number
+                        // Get method invocation name and receiver                    	
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
-                        String receiver = (methodInvocation.getExpression() != null) ? "Line: " + mbLine + " Method call: " + methodInvocation.getExpression().toString() : "null";
+                        String receiver = (methodInvocation.getExpression() != null) ? methodInvocation.getExpression().toString() : "null";
 
                         receiverToMethodsMap2
                             .computeIfAbsent(receiver, key -> new ArrayList<>())
@@ -99,13 +99,12 @@ public class JDT_Test {
                 }
                 methodToInvokedMethodsMap2.put(methodName, invokedMethodsOnReceiver);
                 
-                /* Question 3 */
-		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);								// debug       
-        	    
+                // Question 3
+        	    System.out.println("Method Arguments:");
         	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-        	        System.out.println(entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+        	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
         	    }
-        	    System.out.print("\n");
+        	    System.out.println("\n");
         	    
 		        return super.visit(node);
 			}
@@ -170,7 +169,12 @@ public class JDT_Test {
 //	    for (String signature : methodSignature) {
 //	    	System.out.println(signature);	     
 //	    }
-	
+		
+		/* Question 3*/
+	    System.out.println("Method Arguments:");
+	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+	    }
 	    
 	}
 	

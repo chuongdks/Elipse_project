@@ -77,12 +77,12 @@ public class JDT_Test {
 		                		        		     
                 // Track methods invoked on receivers in the current method body                                           
                 node.accept(new ASTVisitor() {  															// Recursively traverse the method body
+                	int mbLine = cu.getLineNumber(node.getStartPosition()); 								// Current line number
                     @Override
                     public boolean visit(MethodInvocation methodInvocation) {                    	
-                        // Get method invocation name and receiver           
-                    	int mbLine = cu.getLineNumber(methodInvocation.getStartPosition()); 								// Current line number
+                        // Get method invocation name and receiver                    	
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
-                        String receiver = (methodInvocation.getExpression() != null) ? "Line: " + mbLine + " Method call: " + methodInvocation.getExpression().toString() : "null";
+                        String receiver = (methodInvocation.getExpression() != null) ? "Line: "mbLine + "Method call: " methodInvocation.getExpression().toString() : "null";
 
                         receiverToMethodsMap2
                             .computeIfAbsent(receiver, key -> new ArrayList<>())

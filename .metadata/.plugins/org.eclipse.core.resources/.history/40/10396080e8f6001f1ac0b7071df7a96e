@@ -79,10 +79,9 @@ public class JDT_Test {
                 node.accept(new ASTVisitor() {  															// Recursively traverse the method body
                     @Override
                     public boolean visit(MethodInvocation methodInvocation) {                    	
-                        // Get method invocation name and receiver           
-                    	int mbLine = cu.getLineNumber(methodInvocation.getStartPosition()); 								// Current line number
+                        // Get method invocation name and receiver                    	
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
-                        String receiver = (methodInvocation.getExpression() != null) ? "Line: " + mbLine + " Method call: " + methodInvocation.getExpression().toString() : "null";
+                        String receiver = (methodInvocation.getExpression() != null) ? methodInvocation.getExpression().toString() : "null";
 
                         receiverToMethodsMap2
                             .computeIfAbsent(receiver, key -> new ArrayList<>())
@@ -103,7 +102,7 @@ public class JDT_Test {
 		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);								// debug       
         	    
         	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-        	        System.out.println(entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+        	        System.out.println("Line: " + currLine + " Method call: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
         	    }
         	    System.out.print("\n");
         	    
