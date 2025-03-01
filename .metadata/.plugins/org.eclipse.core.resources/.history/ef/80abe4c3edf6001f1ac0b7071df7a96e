@@ -2,10 +2,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.prefs.NodeChangeEvent;
 
 import org.apache.commons.io.FileUtils;
@@ -82,26 +80,35 @@ public class JDT_Test {
                     @Override
                     public boolean visit(MethodInvocation methodInvocation) {                    	
                         // Get method invocation name and receiver           
-                    	int mcLine = cu.getLineNumber(methodInvocation.getStartPosition()); 				// Current line number
+                    	int mbLine = cu.getLineNumber(methodInvocation.getStartPosition()); 				// Current line number
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
                         String receiver = (methodInvocation.getExpression() != null) ? methodInvocation.getExpression().toString() : "null";
-                        
+
                         receiverToMethodsMap2
                             .computeIfAbsent(receiver, key -> new ArrayList<>())
                             .add(invokedMethodName);														// eg: { "obj" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
                         
-                        /* Question 3 */
-        		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);		// debug       
-                	    
-                	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-                	    	System.out.println("Line: " + mcLine + ", Method call: " + entry.getKey() + "." + invokedMethodName +" -> Methods using receiver: " + entry.getValue());
-                	    }
-                	    System.out.print("\n");
 
+                	    
                         return super.visit(methodInvocation);
-                    }                    
-                });                
-                               
+                    }
+                });
+                
+                // Store these methods in the methodToInvokedMethodsMap, associating the method with the list of invoked methods on the receiver
+                List<String> invokedMethodsOnReceiver = new ArrayList<>();
+                for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+                    invokedMethodsOnReceiver.addAll(entry.getValue());										// Add all of the List<String> from methodsCalledInBody
+                }
+                methodToInvokedMethodsMap2.put(methodName, invokedMethodsOnReceiver);       
+                
+                /* Question 3 */
+		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);		// debug       
+        	    
+        	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+        	    	System.out.println("Line: " + ", Method call: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+        	    }
+        	    System.out.print("\n");
+        	    
 		        return super.visit(node);
 			}
 			

@@ -79,6 +79,9 @@ public class JDT_Test {
 		                		     
                 // Track methods invoked on receivers in the current method body                                           
                 node.accept(new ASTVisitor() {  															// Recursively traverse the method body
+                    int lastLine = -1; 																		// Track last method invocation line
+                    String lastMethodCall = ""; 															// Track last invoked method
+                    String lastReceiver = ""; 																// Track the receiver of the last method call
                     @Override
                     public boolean visit(MethodInvocation methodInvocation) {                    	
                         // Get method invocation name and receiver           
@@ -86,22 +89,58 @@ public class JDT_Test {
                         String invokedMethodName = methodInvocation.getName().getIdentifier();                       
                         String receiver = (methodInvocation.getExpression() != null) ? methodInvocation.getExpression().toString() : "null";
                         
+                        // Track last method call
+                        lastLine = mcLine;
+                        lastMethodCall = invokedMethodName;
+                        lastReceiver = receiver;
+                        
                         receiverToMethodsMap2
                             .computeIfAbsent(receiver, key -> new ArrayList<>())
                             .add(invokedMethodName);														// eg: { "obj" -> ["foo", "bar", "baz"] } (obj.Foo, obj.bar, obj.baz)
-                        
-                        /* Question 3 */
-        		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);		// debug       
-                	    
-                	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-                	    	System.out.println("Line: " + mcLine + ", Method call: " + entry.getKey() + "." + invokedMethodName +" -> Methods using receiver: " + entry.getValue());
-                	    }
-                	    System.out.print("\n");
-
+                                        	
                         return super.visit(methodInvocation);
-                    }                    
-                });                
-                               
+                    }
+                    
+//                    @Override
+//                    public void endVisit(MethodDeclaration node) {
+//                        // Print method declaration
+//                        System.out.println("Line: " + currLine + " Method declaration: " + methodName);	// Debug  
+//
+//                        // Print last method call
+//                        if (lastLine != -1) {
+//                            System.out.println("Line: " + lastLine + " Methods call: " + lastReceiver + "." + lastMethodCall);
+//                        }
+//
+//                        // Print method call history in clean format
+//                        for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+//                            String receiver = entry.getKey();
+//                            List<String> methodCalls = entry.getValue();
+//
+//                            if (methodCalls.isEmpty()) continue;
+//
+//                            // Remove duplicates and format
+//                            Set<String> uniqueMethods = new LinkedHashSet<>(methodCalls);
+//                            System.out.println("Method called on " + receiver + ": " + uniqueMethods);
+//                        }
+//                        System.out.print("\n");
+//                    }
+                });
+                
+                // Store these methods in the methodToInvokedMethodsMap, associating the method with the list of invoked methods on the receiver
+                List<String> invokedMethodsOnReceiver = new ArrayList<>();
+                for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+                    invokedMethodsOnReceiver.addAll(entry.getValue());										// Add all of the List<String> from methodsCalledInBody
+                }
+                methodToInvokedMethodsMap2.put(methodName, invokedMethodsOnReceiver);       
+                
+                /* Question 3 */
+		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);		// debug       
+        	    
+        	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
+        	    	System.out.println("Line: " + lastLine + ", Method call: " + entry.getKey() + "." + invokedMethodName +" -> Methods using receiver: " + entry.getValue());
+        	    }
+        	    System.out.print("\n");
+        	    
 		        return super.visit(node);
 			}
 			

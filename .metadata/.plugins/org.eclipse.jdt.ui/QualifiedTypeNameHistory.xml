@@ -5,7 +5,7 @@
     <fullyQualifiedTypeName name="java.lang.OutOfMemoryError"/>
     <fullyQualifiedTypeName name="org.eclipse.jdt.core.dom.ASTVisitor"/>
     <fullyQualifiedTypeName name="java.util.prefs.NodeChangeEvent"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="org.eclipse.core.internal.localstore.Bucket.Visitor"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

@@ -94,7 +94,7 @@ public class JDT_Test {
         		        System.out.println("Line: " + currLine + " Method declaration: " + methodName);		// debug       
                 	    
                 	    for (Map.Entry<String, List<String>> entry : receiverToMethodsMap2.entrySet()) {
-                	    	System.out.println("Line: " + mcLine + ", Method call: " + entry.getKey() + "." + invokedMethodName +" -> Methods using receiver: " + entry.getValue());
+                	    	System.out.println("Line: " + lastLine + ", Method call: " + entry.getKey() + "." + invokedMethodName +" -> Methods using receiver: " + entry.getValue());
                 	    }
                 	    System.out.print("\n");
 
