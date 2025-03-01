@@ -9,11 +9,22 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="append"/>
+			<item value="methodToReceiverMap"/>
+			<item value="get(receiver2);"/>
+			<item value="methodArguments"/>
+			<item value="methodReceivers"/>
+			<item value="read"/>
+			<item value="Methods Found:"/>
+			<item value="Start"/>
 			<item value="readLine"/>
 			<item value="getInputFile"/>
 			<item value="accept"/>
 		</list>
 		<list key="replacehistory">
+			<item value="methodToInvokedMethodsMap "/>
+			<item value="methodToReceiverMap "/>
+			<item value="receiverToMethodsMap "/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

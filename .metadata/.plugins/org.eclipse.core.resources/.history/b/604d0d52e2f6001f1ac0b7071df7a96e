@@ -159,10 +159,10 @@ public class JDT_Test {
 //	    }
 		
 		/* Question 3*/
-	    System.out.println("Method Arguments:");
-	    for (Map.Entry<String, List<String>> entry : methodToInvokedMethodsMap  .entrySet()) {
-	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
-	    }
+//	    System.out.println("Method Arguments:");
+//	    for (Map.Entry<String, List<String>> entry : methodToInvokedMethodsMap  .entrySet()) {
+//	        System.out.println("Method: " + entry.getKey() + " -> Methods using receiver: " + entry.getValue());
+//	    }
 	    
 	}
 	

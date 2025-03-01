@@ -36,3 +36,5 @@
 2025-03-01 09:48:36,227 [Start Help Server] INFO  o.e.j.s.DefaultSessionIdManager - Session workerName=node0
 2025-03-01 09:48:36,289 [Start Help Server] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@3361a8d5{HTTP/1.1, (http/1.1)}{127.0.0.1:50203}
 2025-03-01 09:48:36,330 [Start Help Server] INFO  org.eclipse.jetty.server.Server - Started oejs.Server@5e704de0{STARTING}[12.0.15,sto=0] @1884160ms
+2025-03-01 15:32:00,661 [Stop Help Server] INFO  org.eclipse.jetty.server.Server - Stopped oejs.Server@5e704de0{STOPPING}[12.0.15,sto=0]
+2025-03-01 15:32:00,663 [Stop Help Server] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@3361a8d5{HTTP/1.1, (http/1.1)}{127.0.0.1:0}
